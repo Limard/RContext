@@ -41,6 +41,9 @@ func (t *RoutineContext) Done() {
 	}
 }
 func (t *RoutineContext) Wait() error {
+	if len(t.n) == 0 {
+		t.cancel()
+	}
 	select {
 	case <-t.ctx.Done():
 		return t.err

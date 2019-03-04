@@ -97,3 +97,16 @@ func routineContext2Func2(rctx *RoutineContext, i int) {
 
 	fmt.Println("Func2 out", i)
 }
+
+func TestNewRoutineContext3(t *testing.T) {
+	rctx := NewRoutineContext(context.Background(), 5)
+
+	for i := 0; i < 7; i++ {
+		if e := rctx.Add(); e != nil {
+			fmt.Println("Main break", i)
+			break
+		}
+		routineContext2Func1(rctx, i)
+	}
+	fmt.Println("rctx.Wait():", rctx.Wait())
+}
